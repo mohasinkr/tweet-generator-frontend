@@ -2,6 +2,7 @@ import * as React from "react"
 import { cn } from "@/lib/utils"
 import { CheckIcon, ChevronDownIcon } from "lucide-react"
 
+
 const Select = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement> & {
@@ -52,7 +53,7 @@ const Select = React.forwardRef<
       >
         {React.Children.toArray(children).find(
           (child) => 
-            React.isValidElement(child) && 
+            React.isValidElement<SelectItemProps>(child) && 
             child.type === SelectItem && 
             child.props.value === selectedValue
         ) || (
@@ -63,8 +64,8 @@ const Select = React.forwardRef<
       {isOpen && !disabled && (
         <SelectContent>
           {React.Children.map(children, (child) => {
-            if (React.isValidElement(child) && child.type === SelectItem) {
-              return React.cloneElement(child as React.ReactElement<SelectItemProps>, {
+            if (React.isValidElement<SelectItemProps>(child) && child.type === SelectItem) {
+              return React.cloneElement(child, {
                 selected: child.props.value === selectedValue,
                 onSelect: () => handleValueChange(child.props.value),
               })
@@ -81,7 +82,7 @@ Select.displayName = "Select"
 const SelectTrigger = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement> & { disabled?: boolean }
->(({ className, children, disabled, ...props }, ref) => (
+>(({ className, children, ...props }, ref) => (
   <div
     ref={ref}
     className={cn(

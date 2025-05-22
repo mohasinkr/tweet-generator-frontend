@@ -2,7 +2,7 @@ import React from "react";
 
 interface SparklesProps {
   isAnimating: boolean;
-  buttonRef: React.RefObject<HTMLButtonElement>;
+  buttonRef: React.RefObject<HTMLButtonElement | null>;
 }
 
 /**
